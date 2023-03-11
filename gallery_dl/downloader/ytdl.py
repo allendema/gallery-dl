@@ -99,7 +99,10 @@ class YoutubeDLDownloader(DownloaderBase):
             pathfmt.realpath = pathfmt.temppath = (
                 pathfmt.realdirectory + filename)
         else:
-            pathfmt.set_extension(info_dict["ext"])
+            if "ext" in info_dict:
+                pathfmt.set_extension(info_dict["ext"])
+            else:
+                pathfmt.set_extension(info_dict["formats"][0]["ext"])
             pathfmt.build_path()
 
         if pathfmt.exists():
