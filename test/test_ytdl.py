@@ -25,6 +25,11 @@ class Test_CommandlineArguments(unittest.TestCase):
         except (ImportError, SyntaxError):
             raise unittest.SkipTest("cannot import module '{}'".format(
                 cls.module_name))
+
+        if not getattr(cls.module, "parseOpts", None):
+            raise unittest.SkipTest("frozen module '{}'".format(
+                cls.module.__name__))
+
         cls.default = ytdl.parse_command_line(cls.module, [])
 
     def test_ignore_errors(self):
